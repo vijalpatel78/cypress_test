@@ -1,0 +1,17 @@
+{
+    "US": [    
+        {
+            "megaMenu": "CEILING, WALL, TABLE, FLOOR, OUTDOOR, FANS, ARCHITECTURAL, OUR COLLECTIONS, OUR DESIGNERS, INSPIRATION, SALE"
+        }     
+    ],
+    "UK": [    
+        {
+            "megaMenu": "CEILING, WALL, TABLE, FLOOR, OUTDOOR, FANS, OUR DESIGNERS, OUR COLLECTIONS, SALE"
+        }        
+    ],
+    "EU": [    
+        {
+            "megaMenu": "CEILING, WALL, TABLE, FLOOR, OUTDOOR, FANS, OUR DESIGNERS, OUR COLLECTIONS, SALE"
+        }
+    ]
+}
