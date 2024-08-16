@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="83.017" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2024-01-18T09:10:00" tests="0" file="cypress\e2e\features\inventoryPage.feature" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Inventory Page" timestamp="2024-01-18T09:10:00" tests="1" time="82.995" failures="0">
+    <testcase name="In a wholesale account, the product name and qty should be displayed correctly on the mini cart after adding the product to cart" time="79.517" classname="Inventory Page In a wholesale account, the product name and qty should be displayed correctly on the mini cart after adding the product to cart">
+    </testcase>
+  </testsuite>
+</testsuites>

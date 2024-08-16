@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="113.655" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2024-01-24T18:17:49" tests="0" file="cypress\e2e\features\paymentMethods.feature" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Payment Methods" timestamp="2024-01-24T18:17:49" tests="1" time="113.622" failures="0">
+    <testcase name="The trade user should be able to place an order with an existing card" time="107.902" classname="Payment Methods The trade user should be able to place an order with an existing card">
+    </testcase>
+  </testsuite>
+</testsuites>

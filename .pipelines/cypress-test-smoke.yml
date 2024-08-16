@@ -1,0 +1,319 @@
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - refs/heads/staging
+      - refs/heads/production
+      - refs/heads/staging8
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  isManual: $[eq(variables['Build.Reason'], 'Manual')]
+  isStage: $[eq(variables['Build.SourceBranch'], 'refs/heads/staging')]
+  isProduction: $[eq(variables['Build.SourceBranch'], 'refs/heads/production')]
+  isStage8: $[eq(variables['Build.SourceBranch'], 'refs/heads/staging8')]
+
+stages: 
+- stage: Staging8
+  condition: eq(variables.isStage8, true)
+  jobs:
+  - job: Stagining8Smoke_US
+    timeoutInMinutes: 0
+    steps:
+      - task: NodeTool@0
+        displayName: 'Install Node.js'
+        inputs:
+          versionSource: 'spec'
+          versionSpec: '18.x'
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          command: 'custom'
+          workingDir: 'tests/cypress/'
+          customCommand: 'install --legacy-peer-deps'
+      - script: |
+          BUILD_BUILDNUMBER=$(Build.BuildNumber)
+          commandName1="npx cypress run --record --tag \"stage8,US\" --key ee5554f3-5d4c-4342-ada5-55e5de0b6519 --browser chrome --env testingEnvironment=staging8,country=US,tags=\"@us and @smoke\""
+          echo "Running command: $commandName1"
+          echo "##vso[task.setvariable variable=commandName1]$commandName1"
+      - task: Npm@1
+        inputs:
+          command: 'custom'
+          customCommand: 'install nx'
+      - task: CmdLine@2
+        displayName: 'Execute Cypress Tests for Stagining8 (US)'
+        condition: and(succeeded(), eq(variables.isStage8, true))
+        env:
+          BUILD_BUILDNUMBER: $(Build.BuildNumber)
+        inputs:
+          script: '$(commandName1)'
+          workingDirectory: 'tests/'
+  - job: Stagining8Smoke_UK  
+    condition: eq(variables.isStage8, true)
+    timeoutInMinutes: 0
+    steps:
+      - task: NodeTool@0
+        displayName: 'Install Node.js'
+        inputs:
+          versionSource: 'spec'
+          versionSpec: '18.x'
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          command: 'custom'
+          workingDir: 'tests/cypress/'
+          customCommand: 'install --legacy-peer-deps'
+      - script: |
+          BUILD_BUILDNUMBER=$(Build.BuildNumber)
+          commandName2="npx cypress run --record --tag \"stage8,UK\" --key ee5554f3-5d4c-4342-ada5-55e5de0b6519 --browser chrome --env testingEnvironment=staging8,country=UK,tags=\"@uk and @smoke\""
+          echo "Running command: $commandName2"
+          echo "##vso[task.setvariable variable=commandName2]$commandName2"
+      - task: Npm@1
+        inputs:
+          command: 'custom'
+          customCommand: 'install nx'
+      - task: CmdLine@2
+        displayName: 'Execute Cypress Tests for Stagining8 (US)'
+        condition: and(succeeded(), eq(variables.isStage8, true))
+        env:
+          BUILD_BUILDNUMBER: $(Build.BuildNumber)
+        inputs:
+          script: '$(commandName2)'
+          workingDirectory: 'tests/'
+          
+  - job: Stagining8Smoke_EU  # Similar structure for UK and EU jobs
+    condition: eq(variables.isStage8, true)
+    timeoutInMinutes: 0
+    steps:
+      - task: NodeTool@0
+        displayName: 'Install Node.js'
+        inputs:
+          versionSource: 'spec'
+          versionSpec: '18.x'
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          command: 'custom'
+          workingDir: 'tests/cypress/'
+          customCommand: 'install --legacy-peer-deps'
+      - script: |
+          BUILD_BUILDNUMBER=$(Build.BuildNumber)
+          commandName3="npx cypress run --record --tag \"stage8,EU\" --key ee5554f3-5d4c-4342-ada5-55e5de0b6519 --browser chrome --env testingEnvironment=staging8,country=EU,tags=\"@eu and @smoke\""
+          echo "Running command: $commandName3"
+          echo "##vso[task.setvariable variable=commandName3]$commandName3"
+      - task: Npm@1
+        inputs:
+          command: 'custom'
+          customCommand: 'install nx'
+      - task: CmdLine@2
+        displayName: 'Execute Cypress Tests for Stagining8 (US)'
+        condition: and(succeeded(), eq(variables.isStage8, true))
+        env:
+          BUILD_BUILDNUMBER: $(Build.BuildNumber)
+        inputs:
+          script: '$(commandName3)'
+          workingDirectory: 'tests/'
+- stage: Staging
+  condition: eq(variables.isStage, true)
+  jobs:
+  - job: StaginingSmoke_US
+    condition: eq(variables.isManual, true)
+    timeoutInMinutes: 0
+    steps:
+      - task: NodeTool@0
+        displayName: 'Install Node.js'
+        inputs:
+          versionSource: 'spec'
+          versionSpec: '18.x'
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          command: 'custom'
+          workingDir: 'tests/cypress/'
+          customCommand: 'install --legacy-peer-deps'
+      - script: |
+          BUILD_BUILDNUMBER=$(Build.BuildNumber)
+          commandName1="npx cypress run --record --tag \"stage,US\" --key ee5554f3-5d4c-4342-ada5-55e5de0b6519 --browser chrome --env testingEnvironment=staging,country=US,tags=\"@us and @smoke\""
+          echo "Running command: $commandName1"
+          echo "##vso[task.setvariable variable=commandName1]$commandName1"
+      - task: Npm@1
+        inputs:
+          command: 'custom'
+          customCommand: 'install nx'
+      - task: CmdLine@2
+        displayName: 'Execute Cypress Tests for Stagining (US)'
+        condition: and(succeeded(), eq(variables.isStage, true))
+        env:
+          BUILD_BUILDNUMBER: $(Build.BuildNumber)
+        inputs:
+          script: '$(commandName1)'
+          workingDirectory: 'tests/'
+  - job: StaginingSmoke_UK  # Similar structure for UK and EU jobs
+    condition: eq(variables.isStage, true)
+    timeoutInMinutes: 0
+    steps:
+      - task: NodeTool@0
+        displayName: 'Install Node.js'
+        inputs:
+          versionSource: 'spec'
+          versionSpec: '18.x'
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          command: 'custom'
+          workingDir: 'tests/cypress/'
+          customCommand: 'install --legacy-peer-deps'
+      - script: |
+          BUILD_BUILDNUMBER=$(Build.BuildNumber)
+          commandName2="npx cypress run --record --tag \"stage,UK\" --key ee5554f3-5d4c-4342-ada5-55e5de0b6519 --browser chrome --env testingEnvironment=staging,country=UK,tags=\"@uk and @smoke\""
+          echo "Running command: $commandName2"
+          echo "##vso[task.setvariable variable=commandName2]$commandName2"
+      - task: Npm@1
+        inputs:
+          command: 'custom'
+          customCommand: 'install nx'
+      - task: CmdLine@2
+        displayName: 'Execute Cypress Tests for Stagining (UK)'
+        condition: and(succeeded(), eq(variables.isStage, true))
+        env:
+          BUILD_BUILDNUMBER: $(Build.BuildNumber)
+        inputs:
+          script: '$(commandName2)'
+          workingDirectory: 'tests/'
+  - job: StaginingSmoke_EU  
+    condition: eq(variables.isStage, true)
+    timeoutInMinutes: 0
+    steps:
+      - task: NodeTool@0
+        displayName: 'Install Node.js'
+        inputs:
+          versionSource: 'spec'
+          versionSpec: '18.x'
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          command: 'custom'
+          workingDir: 'tests/cypress/'
+          customCommand: 'install --legacy-peer-deps'
+      - script: |
+          BUILD_BUILDNUMBER=$(Build.BuildNumber)
+          commandName3="npx cypress run --record --tag \"stage,EU\" --key ee5554f3-5d4c-4342-ada5-55e5de0b6519 --browser chrome --env testingEnvironment=staging,country=EU,tags=\"@eu and @smoke\""
+          echo "Running command: $commandName3"
+          echo "##vso[task.setvariable variable=commandName3]$commandName3"
+      - task: Npm@1
+        inputs:
+          command: 'custom'
+          customCommand: 'install nx'
+      - task: CmdLine@2
+        displayName: 'Execute Cypress Tests for Stagining (EU)'
+        condition: and(succeeded(), eq(variables.isStage, true))
+        env:
+          BUILD_BUILDNUMBER: $(Build.BuildNumber)
+        inputs:
+          script: '$(commandName3)'
+          workingDirectory: 'tests/'
+- stage: Production
+  condition: eq(variables.isProduction, true)
+  jobs:
+  - job: ProductionSmoke_US
+    condition: eq(variables.isProduction, true)
+    timeoutInMinutes: 0
+    steps:
+      - task: NodeTool@0
+        displayName: 'Install Node.js'
+        inputs:
+          versionSource: 'spec'
+          versionSpec: '18.x'
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          command: 'custom'
+          workingDir: 'tests/cypress/'
+          customCommand: 'install --legacy-peer-deps'
+      - script: |
+          BUILD_BUILDNUMBER=$(Build.BuildNumber)
+          commandName1="npx cypress run --record --tag \"production,US\" --key ee5554f3-5d4c-4342-ada5-55e5de0b6519 --browser chrome --env testingEnvironment=production,country=US,tags=\"@us and @smoke\""
+          echo "Running command: $commandName1"
+          echo "##vso[task.setvariable variable=commandName1]$commandName1"
+      - task: Npm@1
+        inputs:
+          command: 'custom'
+          customCommand: 'install nx'
+      - task: CmdLine@2
+        displayName: 'Execute Cypress Tests for Production (US)'
+        condition: and(succeeded(), eq(variables.isProduction, true))
+        env:
+          BUILD_BUILDNUMBER: $(Build.BuildNumber)
+        inputs:
+          script: '$(commandName1)'
+          workingDirectory: 'tests/'
+  - job: ProductionSmoke_UK  
+    condition: eq(variables.isProduction, true)
+    timeoutInMinutes: 0
+    steps:
+      - task: NodeTool@0
+        displayName: 'Install Node.js'
+        inputs:
+          versionSource: 'spec'
+          versionSpec: '18.x'
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          command: 'custom'
+          workingDir: 'tests/cypress/'
+          customCommand: 'install --legacy-peer-deps'
+      - script: |
+          BUILD_BUILDNUMBER=$(Build.BuildNumber)
+          commandName2="npx cypress run --record --tag \"production,UK\" --key ee5554f3-5d4c-4342-ada5-55e5de0b6519 --browser chrome --env testingEnvironment=production,country=UK,tags=\"@uk and @smoke\""
+          echo "Running command: $commandName2"
+          echo "##vso[task.setvariable variable=commandName2]$commandName2"
+      - task: Npm@1
+        inputs:
+          command: 'custom'
+          customCommand: 'install nx'
+      - task: CmdLine@2
+        displayName: 'Execute Cypress Tests for Production (UK)'
+        condition: and(succeeded(), eq(variables.isProduction, true))
+        env:
+          BUILD_BUILDNUMBER: $(Build.BuildNumber)
+        inputs:
+          script: '$(commandName2)'
+          workingDirectory: 'tests/'
+  - job: ProductionSmoke_EU  
+    condition: eq(variables.isProduction, true)
+    timeoutInMinutes: 0
+    steps:
+      - task: NodeTool@0
+        displayName: 'Install Node.js'
+        inputs:
+          versionSource: 'spec'
+          versionSpec: '18.x'
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          command: 'custom'
+          workingDir: 'tests/cypress/'
+          customCommand: 'install --legacy-peer-deps'
+      - script: |
+          BUILD_BUILDNUMBER=$(Build.BuildNumber)
+          commandName3="npx cypress run --record --tag \"production,EU\" --key ee5554f3-5d4c-4342-ada5-55e5de0b6519 --browser chrome --env testingEnvironment=production,country=EU,tags=\"@eu and @smoke\""
+          echo "Running command: $commandName3"
+          echo "##vso[task.setvariable variable=commandName3]$commandName3"
+      - task: Npm@1
+        inputs:
+          command: 'custom'
+          customCommand: 'install nx'
+      - task: CmdLine@2
+        displayName: 'Execute Cypress Tests for Production (EU)'
+        condition: and(succeeded(), eq(variables.isProduction, true))
+        env:
+          BUILD_BUILDNUMBER: $(Build.BuildNumber)
+        inputs:
+          script: '$(commandName3)'
+          workingDirectory: 'tests/'
+
+
+ 

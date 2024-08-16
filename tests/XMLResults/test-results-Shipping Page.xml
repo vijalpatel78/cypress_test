@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="113.227" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2024-01-18T14:14:01" tests="0" file="cypress\e2e\features\shippingPage.feature" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Shipping Page" timestamp="2024-01-18T14:14:01" tests="1" time="113.199" failures="0">
+    <testcase name="The wholesale user should be able to see the order summary section and its details" time="109.243" classname="Shipping Page The wholesale user should be able to see the order summary section and its details">
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="73.451" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2024-01-19T18:27:25" tests="0" file="cypress\e2e\features\checkoutPaymentPage.feature" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Checkout Payment Page" timestamp="2024-01-19T18:27:25" tests="1" time="73.430" failures="0">
+    <testcase name="The guest user should be able to see the order summary section and its details" time="70.005" classname="Checkout Payment Page The guest user should be able to see the order summary section and its details">
+    </testcase>
+  </testsuite>
+</testsuites>

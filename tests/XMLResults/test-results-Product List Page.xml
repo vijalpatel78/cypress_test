@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="29.095" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2024-01-22T17:54:42" tests="0" file="cypress\e2e\features\productListPage.feature" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Product List Page" timestamp="2024-01-22T17:54:42" tests="1" time="29.065" failures="0">
+    <testcase name="In a retail account, the product image, SKU, price and finish should be changed as per the selected product variant" time="25.070" classname="Product List Page In a retail account, the product image, SKU, price and finish should be changed as per the selected product variant">
+    </testcase>
+  </testsuite>
+</testsuites>
